@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>แบบทดสอบสมการเบื้องต้น</title>
+  
+
+</head>
+<body>
+<!-- partial:index.partial.html -->
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+  <meta charset="UTF-8">
+  <title>แบบทดสอบปฏิบัติการตัวแปร</title>
+
+</head>
+<body>
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบคณิตศาสตร์ - ปฏิบัติการตัวแปร</title>
+    <link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/contrib/auto-render.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.8/katex.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #43e97b 150%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #434343 10%, #34495e 100%);
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2rem;
+            font-weight: 500;
+            margin-bottom: 10px;
+            margin-top: 15px;
+        }
+
+        .header p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .timer-section {
+            background: #f8f9fa;
+            padding: 20px;
+            border-bottom: 1px solid #dee2e6;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .timer {
+            background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+            color: white;
+            padding: 15px 25px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .progress-info {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .question-counter {
+            background: linear-gradient(135deg, #667db6 0%, #0082c8 100%);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: 500;
+        }
+
+        .progress-bar {
+            width: 200px;
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #667db6, #0082c8);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .test-content {
+            padding: 40px;
+        }
+
+        .question-card {
+            display: none;
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-left: 3px solid #667db6;
+        }
+
+        .question-card.active {
+            display: block;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question-number {
+            background: linear-gradient(135deg, #667db6 0%, #0082c8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            color: #2c3e50;
+        }
+
+        .choices {
+            display: grid;
+            gap: 15px;
+        }
+
+        .choice-item {
+            background: white;
+            border: 2px solid #e9ecef;
+            border-radius: 12px;
+            padding: 15px 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .choice-item:hover {
+            border-color: #667db6;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 125, 182, 0.2);
+        }
+
+        .choice-item.selected {
+            border-color: #667db6;
+            background: #667db6;
+            color: white;
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 125, 182, 0.3);
+        }
+
+        .choice-letter {
+            background: #e9ecef;
+            color: #6c757d;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            flex-shrink: 0;
+        }
+
+        .choice-item.selected .choice-letter {
+            background: rgba(255,255,255,0.2);
+            color: white;
+        }
+
+        .choice-text {
+            flex: 1;
+            font-size: 1.1rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 40px;
+            padding-top: 30px;
+            border-top: 1px solid #dee2e6;
+        }
+
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Sarabun', sans-serif;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667db6 0%, #0082c8 100%);
+            color: white;
+        }
+
+        .btn-secondary {
+            background: linear-gradient(135deg, #667db6 0%, #0082c8 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: #009688;
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .question-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(50px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        .question-nav-btn {
+            aspect-ratio: 1;
+            border: 2px solid #e9ecef;
+            background: white;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .question-nav-btn:hover {
+            border-color: #C7D9EA;
+        }
+
+        .question-nav-btn.correct {
+            background: #A8B545 !important;
+            color: white !important;
+            border-color: #A8B545 !important;
+        }
+
+        .question-nav-btn.incorrect {
+            background: #dc3545 !important;
+            color: white !important;
+            border-color: #dc3545 !important;
+        }
+
+        .question-nav-btn.current {
+            background: #C7D9EA !important;
+            color: white !important;
+            border-color: #C7D9EA !important;
+        }
+
+        .answer-feedback {
+            text-align: center;
+            background: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border-left: 5px solid white;
+        }
+
+        .answer-feedback.show {
+            display: block;
+        }
+
+        .feedback-text {
+            font-size: 1.1rem;
+            color: #28a745;
+            font-weight: 500;
+        }
+
+        .test-summary {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 30px;
+            margin-top: 30px;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .summary-item {
+            text-align: center;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .summary-number {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .summary-number.correct { color: #28a745; }
+        .summary-number.incorrect { color: #dc3545; }
+        .summary-number.time { 
+            background: linear-gradient(135deg, #667db6 0%, #0082c8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .question-nav-btn.current {
+            background: #4facfe;
+            color: white;
+            border-color: #4facfe;
+        }
+
+        .results {
+            display: none;
+            text-align: center;
+            padding: 50px;
+        }
+
+        .results.show {
+            display: block;
+        }
+
+        .score-display {
+            font-size: 3rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667db6 0%, #0082c8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+        }
+
+        .katex {
+            font-size: 1.2em !important;
+            color: #2c3e50 !important;
+        }
+
+        .katex-display {
+            margin: 0.5em 0 !important;
+        }
+
+        .choice-text .katex {
+            font-size: 1.15em !important;
+        }
+
+        .question-text .katex {
+            font-size: 1.25em !important;
+            font-weight: 500 !important;
+        }
+
+        .large-math .katex {
+            font-size: 1.8em !important;
+        }
+
+        .large-fraction .katex {
+            font-size: 1.6em !important;
+        }
+
+        .choice-item.locked {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .choice-item.locked:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .question-status {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 15px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-left: 10px;
+        }
+
+        .status-locked {
+            background: #e9ecef;
+            color: #6c757d;
+        }
+
+        .review-section {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-top: 20px;
+        }
+
+        .review-btn {
+            background: #6c757d;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            margin: 5px;
+            font-size: 0.9rem;
+        }
+
+        .review-btn.incorrect {
+            background: #dc3545;
+        }
+
+        .review-btn:hover {
+            opacity: 0.8;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                margin: 10px;
+                border-radius: 15px;
+            }
+
+            .header {
+                padding: 20px;
+            }
+
+            .header h1 {
+                font-size: 1.5rem;
+            }
+
+            .test-content {
+                padding: 20px;
+            }
+
+            .timer-section {
+                flex-direction: column;
+                gap: 15px;
+                text-align: center;
+            }
+
+            .progress-info {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>4. ปฏิบัติการตัวแปร</h1>
+            <p>แบบทดสอบนี้มุ่งวัดความสามารถในการทำปฏิบัติการทางพีชคณิต ตัวแปร กระบวนพงศ์ตัวแปรต่างๆ<br>
+            ให้เลือกเฉพาะคำตอบที่ถูกต้องที่สุด ข้อสอบมีทั้งสิ้น 20 ข้อ</p>
+        </div>
+
+        <div class="timer-section">
+            <div class="timer" id="timer">00:00</div>
+            <div class="progress-info">
+                <div class="question-counter">
+                    ข้อ <span id="current-question">1</span> จาก 20
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progress-fill"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="test-content">
+            <div class="question-grid" id="question-grid"></div>
+
+            <div id="questions-container"></div>
+
+            <div class="navigation">
+                <button class="btn btn-secondary" id="prev-btn" onclick="previousQuestion()" disabled>
+                    << ก่อนหน้า
+                </button>
+                <button class="btn btn-primary" id="next-btn" onclick="nextQuestion()">
+                    ถัดไป >>
+                </button>
+                <button class="btn btn-success" id="submit-btn" onclick="submitTest()" style="display: none;">
+                    ส่งคำตอบ
+                </button>
+            </div>
+        </div>
+
+        <div class="results" id="results">
+            <h2>ผลการทดสอบ</h2>
+            <div class="score-display" id="score-display">0/20</div>
+            <p id="score-percentage">คะแนน: 0%</p>
+            <button class="btn btn-primary" onclick="resetTest()">ทำใหม่</button>
+        </div>
+    </div>
+ <!-- Copyright Disclaimer Footer -->
+    <div style="background: #2c3e50; color: white; padding: 20px; text-align: center; font-size: 0.8rem; margin-top: 20px;">
+        <div style="max-width: 1000px; margin: 0 auto;">
+            <h4 style="margin-bottom: 10px; color: #ecf0f1;">📚 ข้อมูลอ้างอิง</h4>
+            <p style="margin-bottom: 8px;">
+                <strong>แหล่งที่มา:</strong> SYNTAX+ - ณัฐ อุดมพาณิชย์<br>
+                <strong>สำนักพิมพ์:</strong> บริษัทซินแทกซ์พลัส จำกัด | <strong>ปีที่พิมพ์:</strong> พ.ศ. 2566 | <strong>ISBN:</strong> 978-616-603-063-1
+            </p>
+            <div style="border-top: 1px solid #34495e; padding-top: 15px; margin-top: 15px;">
+                <p style="font-size: 0.75rem; opacity: 0.9; line-height: 1.4;">
+                    ⚖️ <strong>ข้อปฏิเสธความรับผิดชอบ:</strong><br>
+                    เนื้อหาในแบบทดสอบนี้นำมาจากแหล่งการเรียนรู้เพื่อการศึกษา ไม่มีวัตถุประสงค์เชิงพาณิชย์<br>
+                    หากเป็นเจ้าของลิขสิทธิ์และต้องการให้ปรับปรุงหรือลบเนื้อหา กรุณาติดต่อผู้พัฒนา<br>
+                    <em>การใช้งานเนื้อหานี้อยู่ภายใต้หลักการใช้งานอย่างเป็นธรรม (Fair Use) เพื่อการศึกษา</em>
+                </p>
+            </div>
+        </div>
+    </div></div>
+
+    <script>
+        const questions = [
+            {
+                question: "<span class='large-fraction'>\\(\\frac{20b^{3} - 8b}{4b}\\)</span> เท่ากับข้อใดต่อไปนี้",
+                choices: ["\\(5b^{2} - 2b\\)", "\\(5b^{2} - 8b\\)", "\\(5b^{2} - 2\\)", "\\(5b^{2} - 8\\)"],
+                correct: 2
+            },
+            {
+                question: "ค่าของ \\((39)^{2} + 2(39)(61) + (61)^{2}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["9,099", "9,990", "10,000", "10,001"],
+                correct: 2
+            },
+            {
+                question: "ผลคูณรวมของ \\((4a + a - 3)(4b - 2b - b)\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["\\(5ab - 3b\\)", "\\(2ab\\)", "\\(5ab\\)", "\\(5ab - 2b\\)"],
+                correct: 0
+            },
+            {
+                question: "ถ้า \\((x - y)^{2} = 50\\) และ \\(xy = 7\\) แล้ว ค่าของ \\(x^{2} + y^{2}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["36", "43", "57", "64"],
+                correct: 3
+            },
+            {
+                question: "ถ้า \\(p =\\) <span class='large-fraction'>\\(\\frac{a}{a-b}\\)</span> เมื่อ a ≠ b แล้ว \\(1-p\\) ในพจน์ของ a และ b ตรงกับข้อใดต่อไปนี้",
+                choices: ["<span class='large-fraction'>\\(\\frac{a}{a-b}\\)</span>", "<span class='large-fraction'>\\(\\frac{a}{a+b}\\)</span>", "<span class='large-fraction'>\\(\\frac{b}{a-b}\\)</span>", "<span class='large-fraction'>\\(\\frac{b}{b-a}\\)</span>"],
+                correct: 3
+            },
+            {
+                question: "ถ้า \\((p-q)^{2} = 25\\) และ \\(pq = 14\\) แล้ว ค่าของ \\((p+q)^{2}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["25", "53", "64", "81"],
+                correct: 3
+            },
+            {
+                question: "ถ้า \\(a-b = 2x\\) และ \\(a+b = 5x\\) แล้ว นิพจน์ \\(a^{2} - b^{2}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["\\(9x^{2}\\)", "\\(10x^{2}\\)", "\\(21x^{2}\\)", "\\(29x^{2}\\)"],
+                correct: 1
+            },
+            {
+                question: "ถ้า \\((2y + m)^{2} = 4y^{2} - 12y + m^{2}\\) แล้ว ค่าของ m เท่ากับข้อใดต่อไปนี้",
+                choices: ["-3", "-1", "1", "3"],
+                correct: 0
+            },
+            {
+                question: "ข้อความต่อไปนี้ถูกต้องกี่ข้อ<br>ก. \\((x+y)^{2} = x^{2} + y^{2}\\)<br>ข. \\(x^{2} + x^{2} = x^{4}\\)<br>ค. <span class='large-fraction'>\\(\\frac{2^{x+2}}{2^{x}}\\)</span> \\(= 4\\)<br>ง. \\((3x)^{2} = 6x^{2}\\)",
+                choices: ["0 ข้อความ", "1 ข้อความ", "2 ข้อความ", "3 ข้อความ"],
+                correct: 1
+            },
+            {
+                question: "ถ้า \\((ax + b)^{2} = 9x^{2} + kx + 16\\) แล้ว ข้อใดต่อไปนี้ถูก<br>ก. \\(a + b = 7\\)<br>ข. \\(k = 24\\)<br>ค. \\(a^{2} + b^{2} = 25\\)",
+                choices: ["ก", "ค.", "ก. ค.", "ก. ข. ค."],
+                correct: 1
+            },
+            {
+                question: "ถ้า \\(\\left(\\frac{x}{100} + 1\\right)\\left(\\frac{x}{100} - 1\\right) = Ax^{2} - 1\\) แล้ว ค่าของ <span class='small-fraction'>\\(\\sqrt{A}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["0.1", "0.01", "0.001", "0.0001"],
+                correct: 1
+            },
+            {
+                question: "ถ้า \\((x + 5)(x + c) = x^{2} + 2x + d\\) แล้ว ค่าของ \\(c - d\\) มีค่าเท่ากับข้อใดต่อไปนี้",
+                choices: ["12", "18", "-12", "-18"],
+                correct: 0
+            },
+            {
+                question: "ถ้า \\((x - 2)(x + 2) = x(x - m)\\) แล้ว ข้อใดต่อไปนี้เท่ากับ m",
+                choices: ["-4", "<span class='large-fraction'>\\(\\frac{4}{x}\\)</span>", "\\(-4x\\)", "\\(-4x^{2}\\)"],
+                correct: 1
+            },
+            {
+                question: "ถ้า \\(x, y > 0\\) แล้ว นิพจน์ <span class='large-fraction'>\\(\\frac{1}{\\frac{1}{x} + \\frac{1}{y}}\\)</span> เท่ากับข้อใดต่อไปนี้",
+                choices: ["\\(x + y\\)", "<span class='large-fraction'>\\(\\frac{x + y}{xy}\\)</span>", "<span class='large-fraction'>\\(\\frac{xy}{x + y}\\)</span>", "<span class='large-fraction'>\\(\\frac{x + y}{y + x}\\)</span>"],
+                correct: 2
+            },
+            {
+                question: "ถ้า \\((1 +\\) <span class='large-fraction'>\\(\\frac{1}{t}\\)</span>\\()^{2} = 4\\) แล้ว ค่าของ \\(t^{2} +\\) <span class='large-fraction'>\\(\\frac{1}{t^{2}}\\)</span> เท่ากับข้อใดต่อไปนี้",
+                choices: ["2", "12", "14", "18"],
+                correct: 0
+            },
+            {
+                question: "ถ้า <span class='large-fraction'>\\(\\frac{a}{b}\\)</span> \\(= 1 -\\) <span class='large-fraction'>\\(\\frac{x}{y}\\)</span> แล้ว <span class='large-fraction'>\\(\\frac{b}{a}\\)</span> เท่ากับข้อใดต่อไปนี้",
+                choices: ["<span class='large-fraction'>\\(\\frac{x}{y-x}\\)</span>", "<span class='large-fraction'>\\(\\frac{y}{y-x}\\)</span>", "<span class='large-fraction'>\\(\\frac{y}{x-y}\\)</span>", "<span class='large-fraction'>\\(\\frac{x}{x-y}\\)</span>"],
+                correct: 1
+            },
+            {
+                question: "ถ้า \\((3y - 1)(2y + k) = ay^{2} + by - 5\\) แล้ว ผลบวก \\(a + b\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["4", "7", "19", "22"],
+                correct: 2
+            },
+            {
+                question: "ถ้า x ≠ 0 และ \\(y =\\) <span class='large-fraction'>\\(\\frac{3}{x} - \\frac{x}{2}\\)</span> แล้ว นิพจน์ <span class='large-fraction'>\\(\\frac{1}{2y}\\)</span> เท่ากับข้อใดต่อไปนี้",
+                choices: ["<span class='large-fraction'>\\(\\frac{x}{6-x^{2}}\\)</span>", "<span class='large-fraction'>\\(\\frac{2x}{6-x^{2}}\\)</span>", "<span class='large-fraction'>\\(\\frac{4x}{6-x^{2}}\\)</span>", "<span class='large-fraction'>\\(\\frac{x}{12-2x^{2}}\\)</span>"],
+                correct: 0
+            },
+            {
+                question: "ถ้า \\(a - b = 5\\) และ \\(ab = 3\\) แล้ว ค่าของ \\(a^{3} - b^{3}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["120", "140", "150", "170"],
+                correct: 3
+            },
+            {
+                question: "ถ้า \\(a = x + y\\) และ \\(b = xy\\) แล้ว นิพจน์ \\(x^{-1} + y^{-1}\\) เท่ากับข้อใดต่อไปนี้",
+                choices: ["\\(a^{-1}\\)", "\\(b^{-1}\\)", "\\(a^{-1}b\\)", "\\(ab^{-1}\\)"],
+                correct: 3
+            }
+        ];
+
+        let currentQuestion = 0;
+        let answers = {};
+        let timeElapsed = 0;
+        let timerInterval;
+        let showingAnswerFeedback = false;
+        let lockedQuestions = new Set();
+
+        function initializeTest() {
+            createQuestionGrid();
+            createQuestions();
+            startTimer();
+            showQuestion(0);
+
+            setTimeout(() => {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false,
+                    errorColor: '#cc0000',
+                    strict: false,
+                    trust: true
+                });
+            }, 200);
+
+            console.log('Test initialized successfully');
+        }
+
+        function createQuestionGrid() {
+            const grid = document.getElementById('question-grid');
+            for (let i = 0; i < 20; i++) {
+                const btn = document.createElement('div');
+                btn.className = 'question-nav-btn';
+                btn.textContent = i + 1;
+                btn.onclick = () => {
+                    showQuestion(i);
+                    setTimeout(() => updateQuestionGridBasic(), 50);
+                };
+                grid.appendChild(btn);
+            }
+        }
+
+        function createQuestions() {
+            const container = document.getElementById('questions-container');
+            questions.forEach((q, index) => {
+                const questionCard = document.createElement('div');
+                questionCard.className = 'question-card';
+                questionCard.id = `question-${index}`;
+
+                const choicesHTML = q.choices.map((choice, i) => 
+                    `<div class="choice-item" data-question="${index}" data-choice="${i}">
+                        <div class="choice-letter">${String.fromCharCode(97 + i)}</div>
+                        <div class="choice-text">${choice}</div>
+                    </div>`
+                ).join('');
+
+                questionCard.innerHTML = `
+                    <div class="question-number">ข้อ ${index + 1}</div>
+                    <div class="question-text">${q.question}</div>
+                    <div class="choices">
+                        ${choicesHTML}
+                    </div>
+                `;
+                container.appendChild(questionCard);
+            });
+
+            attachChoiceEventListeners();
+        }
+
+        function attachChoiceEventListeners() {
+            document.querySelectorAll('.choice-item').forEach(item => {
+                const questionIndex = parseInt(item.dataset.question);
+                const choiceIndex = parseInt(item.dataset.choice);
+
+                item.onclick = () => selectAnswer(questionIndex, choiceIndex);
+            });
+        }
+
+        function showQuestion(index) {
+            document.querySelectorAll('.question-card').forEach(card => {
+                card.classList.remove('active');
+            });
+
+            document.getElementById(`question-${index}`).classList.add('active');
+
+            currentQuestion = index;
+            updateNavigation();
+            updateProgress();
+
+            const gridButtons = document.querySelectorAll('.question-nav-btn');
+            gridButtons.forEach((btn, i) => {
+                btn.classList.remove('current');
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+
+                if (answers.hasOwnProperty(i) && lockedQuestions.has(i)) {
+                    const isCorrect = answers[i] === questions[i].correct;
+                    btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+                }
+
+                if (i === currentQuestion) {
+                    btn.classList.add('current');
+                    btn.style.background = '#0082c8';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#0082c8';
+                }
+            });
+
+            if (answers.hasOwnProperty(index)) {
+                const questionCard = document.getElementById(`question-${index}`);
+                questionCard.querySelectorAll('.choice-item').forEach((item, i) => {
+                    item.classList.toggle('selected', i === answers[index]);
+                });
+
+                if (lockedQuestions.has(index)) {
+                    lockQuestionChoices(index);
+                    setTimeout(() => {
+                        showAnswerFeedback(index, answers[index]);
+                    }, 200);
+                }
+            }
+
+            updateQuestionStatus(index);
+
+            setTimeout(() => {
+                renderMathInElement(document.getElementById(`question-${index}`), {
+                    delimiters: [
+                        {left: "\\(", right: "\\)", display: false},
+                        {left: "\\[", right: "\\]", display: true}
+                    ],
+                    throwOnError: false,
+                    errorColor: '#cc0000',
+                    strict: false,
+                    trust: true
+                });
+            }, 100);
+        }
+
+        function selectAnswer(questionIndex, choiceIndex) {
+            if (lockedQuestions.has(questionIndex)) {
+                return;
+            }
+
+            answers[questionIndex] = choiceIndex;
+
+            const questionCard = document.getElementById(`question-${questionIndex}`);
+            questionCard.querySelectorAll('.choice-item').forEach((item, i) => {
+                item.classList.toggle('selected', i === choiceIndex);
+            });
+
+            updateQuestionGridBasic();
+        }
+
+        function showAnswerFeedback(questionIndex, userAnswer) {
+            const correctAnswer = questions[questionIndex].correct;
+            const isCorrect = userAnswer === correctAnswer;
+
+            const existingFeedback = document.querySelector('.answer-feedback');
+            if (existingFeedback) {
+                existingFeedback.remove();
+            }
+
+            const feedback = document.createElement('div');
+            feedback.className = 'answer-feedback show';
+
+            const correctChoice = String.fromCharCode(97 + correctAnswer);
+            const userChoice = String.fromCharCode(97 + userAnswer);
+
+            if (isCorrect) {
+                feedback.innerHTML = `
+                    <div class="feedback-text" style="color: #28a745;">
+                        ✅ ถูกต้อง! คำตอบที่ถูกคือ ข้อ ${correctChoice}
+                    </div>
+                `;
+            } else {
+                feedback.innerHTML = `
+                    <div class="feedback-text" style="color: #dc3545;">
+                        ❌ คำตอบของคุณ: ข้อ ${userChoice} | คำตอบที่ถูก: ข้อ ${correctChoice}
+                    </div>
+                `;
+            }
+
+            const questionCard = document.getElementById(`question-${questionIndex}`);
+            questionCard.appendChild(feedback);
+
+            showingAnswerFeedback = true;
+        }
+
+        function updateQuestionGridBasic() {
+            const gridButtons = document.querySelectorAll('.question-nav-btn');
+            gridButtons.forEach((btn, index) => {
+                btn.classList.remove('current');
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+
+                if (index === currentQuestion) {
+                    btn.classList.add('current');
+                    btn.style.background = '#0082c8';
+                    btn.style.color = 'white';
+                    btn.style.borderColor = '#0082c8';
+                }
+            });
+        }
+
+        function updateQuestionStatus(questionIndex) {
+            const questionCard = document.getElementById(`question-${questionIndex}`);
+            const questionNumber = questionCard.querySelector('.question-number');
+
+            const existingStatus = questionCard.querySelector('.question-status');
+            if (existingStatus) {
+                existingStatus.remove();
+            }
+
+            if (lockedQuestions.has(questionIndex)) {
+                const status = document.createElement('span');
+                status.className = 'question-status status-locked';
+                status.textContent = 'คำตอบถูกล็อค';
+                questionNumber.appendChild(status);
+            }
+        }
+
+        function reviewQuestion(questionIndex) {
+            document.querySelector('.test-content').style.display = 'block';
+            document.getElementById('results').classList.remove('show');
+
+            showQuestion(questionIndex);
+
+            document.getElementById('next-btn').style.display = 'none';
+            document.getElementById('prev-btn').style.display = 'none';
+            document.getElementById('submit-btn').style.display = 'none';
+
+            const navigation = document.querySelector('.navigation');
+            let backBtn = document.getElementById('back-to-results');
+            if (!backBtn) {
+                backBtn = document.createElement('button');
+                backBtn.id = 'back-to-results';
+                backBtn.className = 'btn btn-secondary';
+                backBtn.textContent = '← กลับดูผลสอบ';
+                backBtn.onclick = backToResults;
+                navigation.appendChild(backBtn);
+            }
+            backBtn.style.display = 'inline-block';
+        }
+
+        function backToResults() {
+            document.querySelector('.test-content').style.display = 'none';
+            document.getElementById('results').classList.add('show');
+        }
+
+        function lockQuestionChoices(questionIndex) {
+            const questionCard = document.getElementById(`question-${questionIndex}`);
+            questionCard.querySelectorAll('.choice-item').forEach(item => {
+                item.classList.add('locked');
+                item.onclick = null;
+                item.style.cursor = 'not-allowed';
+                item.style.opacity = '0.7';
+            });
+        }
+
+        function updateQuestionColor(questionIndex) {
+            const gridButtons = document.querySelectorAll('.question-nav-btn');
+            const btn = gridButtons[questionIndex];
+
+            if (answers.hasOwnProperty(questionIndex)) {
+                const isCorrect = answers[questionIndex] === questions[questionIndex].correct;
+                btn.classList.remove('answered');
+                btn.classList.add(isCorrect ? 'correct' : 'incorrect');
+
+                if (questionIndex !== currentQuestion) {
+                    btn.classList.remove('current');
+                    btn.style.background = '';
+                    btn.style.color = '';
+                    btn.style.borderColor = '';
+                }
+            }
+        }
+
+        function updateNavigation() {
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            prevBtn.disabled = currentQuestion === 0;
+
+            if (currentQuestion === 19) {
+                nextBtn.style.display = 'none';
+                submitBtn.style.display = 'inline-block';
+            } else {
+                nextBtn.style.display = 'inline-block';
+                submitBtn.style.display = 'none';
+            }
+
+            document.getElementById('current-question').textContent = currentQuestion + 1;
+        }
+
+        function updateProgress() {
+            const progress = ((currentQuestion + 1) / 20) * 100;
+            document.getElementById('progress-fill').style.width = `${progress}%`;
+        }
+
+        function nextQuestion() {
+            if (answers.hasOwnProperty(currentQuestion)) {
+                lockedQuestions.add(currentQuestion);
+
+                document.getElementById('next-btn').disabled = true;
+                document.getElementById('prev-btn').disabled = true;
+                document.getElementById('submit-btn').disabled = true;
+
+                showAnswerFeedback(currentQuestion, answers[currentQuestion]);
+                updateQuestionColor(currentQuestion);
+                lockQuestionChoices(currentQuestion);
+
+                setTimeout(() => {
+                    document.getElementById('next-btn').disabled = false;
+                    document.getElementById('prev-btn').disabled = false;
+                    document.getElementById('submit-btn').disabled = false;
+
+                    if (currentQuestion < 19) {
+                        showQuestion(currentQuestion + 1);
+                    }
+                }, 1500);
+            } else {
+                if (currentQuestion < 19) {
+                    showQuestion(currentQuestion + 1);
+                }
+            }
+        }
+
+        function previousQuestion() {
+            if (currentQuestion > 0) {
+                showQuestion(currentQuestion - 1);
+            }
+        }
+
+        function startTimer() {
+            timerInterval = setInterval(() => {
+                timeElapsed++;
+                updateTimerDisplay();
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeElapsed / 60);
+            const seconds = timeElapsed % 60;
+            document.getElementById('timer').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function submitTest() {
+            if (answers.hasOwnProperty(currentQuestion)) {
+                lockedQuestions.add(currentQuestion);
+
+                document.getElementById('next-btn').disabled = true;
+                document.getElementById('prev-btn').disabled = true;
+                document.getElementById('submit-btn').disabled = true;
+
+                showAnswerFeedback(currentQuestion, answers[currentQuestion]);
+                updateQuestionColor(currentQuestion);
+                lockQuestionChoices(currentQuestion);
+
+                setTimeout(() => {
+                    completeTest();
+                }, 1500);
+            } else {
+                completeTest();
+            }
+        }
+
+        function completeTest() {
+            clearInterval(timerInterval);
+
+            let correctAnswers = 0;
+            let incorrectAnswers = 0;
+            let unanswered = 0;
+            let incorrectQuestions = [];
+
+            for (let i = 0; i < questions.length; i++) {
+                if (answers.hasOwnProperty(i)) {
+                    if (answers[i] === questions[i].correct) {
+                        correctAnswers++;
+                    } else {
+                        incorrectAnswers++;
+                        incorrectQuestions.push(i + 1);
+                    }
+                } else {
+                    unanswered++;
+                }
+            }
+
+            const percentage = Math.round((correctAnswers / questions.length) * 100);
+            const timeMinutes = Math.floor(timeElapsed / 60);
+            const timeSeconds = timeElapsed % 60;
+
+            const reviewButtons = incorrectQuestions.length > 0 ? 
+                incorrectQuestions.map(qNum => 
+                    `<button class="review-btn incorrect" onclick="reviewQuestion(${qNum - 1})">ข้อ ${qNum}</button>`
+                ).join('') : 
+                '<p style="color: #28a745;">🎉 ยินดีด้วย! คุณทำถูกทุกข้อ</p>';
+
+            document.querySelector('.test-content').style.display = 'none';
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.classList.add('show');
+
+            resultsDiv.innerHTML = `
+                <h2>📊 สรุปผลการทดสอบ</h2>
+                <div class="score-display">${correctAnswers}/20</div>
+                <p style="font-size: 1.3rem; margin-bottom: 30px;">คะแนนรวม: ${percentage}%</p>
+                <p style="color: #6c757d; font-size: 1rem; margin-bottom: 20px;">
+                    * คะแนนยึดตามคำตอบครั้งแรกที่ส่ง
+                </p>
+
+                <div class="test-summary">
+                    <h3 style="text-align: center; margin-bottom: 20px;">รายละเอียดผลการทดสอบ</h3>
+                    <div class="summary-grid">
+                        <div class="summary-item">
+                            <div class="summary-number correct">${correctAnswers}</div>
+                            <div>ข้อที่ถูก</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-number incorrect">${incorrectAnswers}</div>
+                            <div>ข้อที่ผิด</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-number" style="color: #6c757d;">${unanswered}</div>
+                            <div>ข้อที่ไม่ตอบ</div>
+                        </div>
+                        <div class="summary-item">
+                            <div class="summary-number time">${timeMinutes}:${timeSeconds.toString().padStart(2, '0')}</div>
+                            <div>เวลาที่ใช้</div>
+                        </div>
+                    </div>
+
+                    <div style="text-align: center; margin-top: 20px;">
+                        <div style="font-size: 1.1rem; margin-bottom: 10px;">
+                            <strong>ระดับคะแนน:</strong> 
+                            ${percentage >= 80 ? '🌟 ดีเยี่ยม' : 
+                              percentage >= 70 ? '👍 ดี' : 
+                              percentage >= 60 ? '👌 พอใช้' : 
+                              percentage >= 50 ? '📚 ควรปรับปรุง' : '💪 ต้องศึกษาเพิ่มเติม'}
+                        </div>
+                        <div style="color: #6c757d;">
+                            ความแม่นยำ: ${((correctAnswers / (correctAnswers + incorrectAnswers)) * 100).toFixed(1)}%
+                            ${unanswered > 0 ? ` (มี ${unanswered} ข้อที่ไม่ได้ตอบ)` : ''}
+                        </div>
+                    </div>
+                </div>
+
+                ${incorrectQuestions.length > 0 ? `
+                <div class="review-section">
+                    <h3 style="color: #dc3545; margin-bottom: 15px;">📋 รีวิวข้อที่ทำผิด</h3>
+                    <p style="margin-bottom: 15px;">คลิกที่ปุ่มข้อต่อไปนี้เพื่อดูคำตอบที่ถูกต้อง:</p>
+                    ${reviewButtons}
+                    <p style="font-size: 0.9rem; color: #6c757d; margin-top: 10px;">
+                        * คุณสามารถดูคำตอบที่ถูกต้องได้ แต่ไม่สามารถเปลี่ยนคำตอบเพื่อเพิ่มคะแนนได้
+                    </p>
+                </div>
+                ` : ''}
+
+                <button class="btn btn-primary" onclick="resetTest()" style="margin-top: 30px;">ทำใหม่อีกครั้ง</button>
+            `;
+        }
+
+        function resetTest() {
+            currentQuestion = 0;
+            answers = {};
+            timeElapsed = 0;
+            showingAnswerFeedback = false;
+            lockedQuestions = new Set();
+
+            clearInterval(timerInterval);
+
+            document.querySelector('.test-content').style.display = 'block';
+            document.getElementById('results').classList.remove('show');
+
+            document.querySelectorAll('.choice-item').forEach(item => {
+                item.classList.remove('selected', 'locked');
+                item.style.opacity = '';
+                item.style.cursor = '';
+            });
+
+            attachChoiceEventListeners();
+
+            document.querySelectorAll('.answer-feedback').forEach(feedback => {
+                feedback.remove();
+            });
+
+            document.querySelectorAll('.question-status').forEach(status => {
+                status.remove();
+            });
+
+            document.querySelectorAll('.question-nav-btn').forEach((btn, index) => {
+                btn.classList.remove('correct', 'incorrect', 'answered', 'current');
+                btn.style.background = '';
+                btn.style.color = '';
+                btn.style.borderColor = '';
+                btn.onclick = () => {
+                    showQuestion(index);
+                    setTimeout(() => updateQuestionGridBasic(), 50);
+                };
+            });
+
+            const nextBtn = document.getElementById('next-btn');
+            const prevBtn = document.getElementById('prev-btn');
+            const submitBtn = document.getElementById('submit-btn');
+
+            nextBtn.style.display = 'inline-block';
+            nextBtn.disabled = false;
+            nextBtn.onclick = nextQuestion;
+
+            prevBtn.style.display = 'inline-block';
+            prevBtn.disabled = false;
+            prevBtn.onclick = previousQuestion;
+
+            submitBtn.style.display = 'none';
+            submitBtn.disabled = false;
+            submitBtn.onclick = submitTest;
+
+            const backBtn = document.getElementById('back-to-results');
+            if (backBtn) {
+                backBtn.style.display = 'none';
+            }
+
+            document.getElementById('timer').textContent = '00:00';
+
+            startTimer();
+            showQuestion(0);
+
+            console.log('Test reset successfully - Ready for new test');
+        }
+
+        document.addEventListener('DOMContentLoaded', initializeTest);
+    </script>
+</body>
+</html>
